@@ -8,16 +8,21 @@ using UnityEngine.SceneManagement;
 
 public class PlayerConfigurationManager : MonoBehaviour
 {
-    private List<PlayerConfiguration> playerConfigs;
+    public List<PlayerConfiguration> playerConfigs;
 
     [SerializeField]
     private int maxPlayers = 2;
     public static PlayerConfigurationManager Instance { get; private set; }
     public Color[] colorDictionary;
-    public MercDictionary[] mercDictionary;
+    public MercData[] mercData;
+    public Dictionary<MercTag, MercData> mercDictionary = new Dictionary<MercTag, MercData>();
 
     private void Awake()
     {
+        foreach(MercData mercDataPoint in mercData)
+        {
+            mercDictionary.Add(mercDataPoint.mercTag, mercDataPoint);
+        }
         if(Instance != null)
         {
             Debug.Log("SINGLETON - Trying to create another instance - error");
@@ -35,9 +40,9 @@ public class PlayerConfigurationManager : MonoBehaviour
         playerConfigs[playerIndex].merc = mercTag;
     }
 
-    public void SetPlayerColor(int playerIndex, int colorIndex)  //setting the color of our new player
+    public void SetPlayerColor(int playerIndex, Color color)  //setting the color of our new player
     {
-        playerConfigs[playerIndex].color = Color.red;
+        playerConfigs[playerIndex].color = color;
     }
 
     public void ReadyPlayer(int index)   //readying up the player TODO: unreadying
@@ -55,7 +60,6 @@ public class PlayerConfigurationManager : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
         }
     }
-
     public void HandlePlayerJoin(PlayerInput pi)
     {
         Debug.Log("Player Joined!!" + pi.playerIndex);
@@ -92,7 +96,7 @@ public class PlayerConfiguration
 }
 
 [Serializable]
-public class MercDictionary
+public class MercData
 {
     public MercTag mercTag;
     public GameObject mercPrefab;

@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bullet
   - Solid
   - Point Of Interest
+  - Spawn Point
   layers:
   - Default
   - TransparentFX

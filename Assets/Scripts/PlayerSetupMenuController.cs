@@ -20,6 +20,8 @@ public class PlayerSetupMenuController : MonoBehaviour
     [SerializeField]
     private Button readyButton;
     [SerializeField]
+    private GameObject readyConfirmation;
+    [SerializeField]
     private GameObject colorButtonPrefab;
     [SerializeField]
     private GameObject colorButtonLayoutGroup;
@@ -31,14 +33,14 @@ public class PlayerSetupMenuController : MonoBehaviour
     private MultiplayerEventSystem mpEventSystem;
     private InputSystemUIInputModule uiInputModule;
 
-    private float ignoreInputTime = 1.5f;
+    private float ignoreInputTime = .5f;
     private bool inputEnabled;
     private List<GameObject> colorButtonsList = new List<GameObject>();
     private List<GameObject> mercButtonsList = new List<GameObject>();
 
     public GameObject[] playerSetupMenus;
     private int currentMenu = 0;
-    public GameObject lastSelectedObject;
+    private GameObject lastSelectedObject;
 
     public void SetPlayerIndex(int pi)
     {
@@ -96,7 +98,7 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (!inputEnabled)
             return;
-        PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, colorIndex);
+        PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, PlayerConfigurationManager.Instance.colorDictionary[colorIndex]);
         NextMenu();
     }
     public void UpdateOutline()
@@ -115,6 +117,8 @@ public class PlayerSetupMenuController : MonoBehaviour
             return;
         PlayerConfigurationManager.Instance.ReadyPlayer(playerIndex);
         readyButton.gameObject.SetActive(false);
+        readyConfirmation.SetActive(true);
+        readyConfirmation.GetComponent<TextMeshProUGUI>().SetText("Player " + (playerIndex+1).ToString() + " is Ready.");
     }
     public void GenerateColorSelectField()
     {

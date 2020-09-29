@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5923603487339090599}
   - component: {fileID: 4850472763400201037}
   - component: {fileID: 7921720705374880169}
+  - component: {fileID: 7115120485437917654}
   m_Layer: 5
   m_Name: MercButton
   m_TagString: Untagged
@@ -141,6 +142,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7115120485437917654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3085958050897187100}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4821341936342887888
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,27 +54,9 @@ MonoBehaviour:
   - {r: 0, g: 0.5188679, b: 0.08433207, a: 1}
   - {r: 0.357296, g: 0, b: 1, a: 1}
   - {r: 0.719932, g: 0.07812384, b: 0.7264151, a: 1}
-  mercDictionary:
+  mercData:
   - mercTag: 0
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 1
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 2
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 3
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 4
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 5
-    mercPrefab: {fileID: 0}
-    mercIcon: {fileID: 0}
-  - mercTag: 6
-    mercPrefab: {fileID: 0}
+    mercPrefab: {fileID: 6042718314747823153, guid: b7756c93b83fe8447a4249daf3335b80, type: 3}
     mercIcon: {fileID: 0}
 --- !u!114 &2086314134516054521
 MonoBehaviour:
