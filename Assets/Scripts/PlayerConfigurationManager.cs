@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 public class PlayerConfigurationManager : MonoBehaviour
 {
+    public float FPS;
     public List<PlayerConfiguration> playerConfigs;
-
     [SerializeField]
     private int maxPlayers = 2;
     public static PlayerConfigurationManager Instance { get; private set; }
@@ -35,6 +36,10 @@ public class PlayerConfigurationManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        FPS = (1f / Time.unscaledDeltaTime);
+    }
     public void SetMerc(int playerIndex, MercTag mercTag)
     {
         playerConfigs[playerIndex].merc = mercTag;
