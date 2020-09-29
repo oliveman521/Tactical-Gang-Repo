@@ -98,7 +98,9 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (!inputEnabled)
             return;
-        PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, PlayerConfigurationManager.Instance.colorDictionary[colorIndex]);
+
+        Debug.Log(colorIndex);
+        PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, colorIndex);
         NextMenu();
     }
     public void UpdateOutline()
@@ -124,10 +126,11 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         for (int i = 0; i < PlayerConfigurationManager.Instance.colorDictionary.Length; i++)
         {
+            int currentIndex = i;
             colorButtonsList.Add(Instantiate(colorButtonPrefab, colorButtonLayoutGroup.transform));
             colorButtonsList[i].GetComponent<Image>().color = PlayerConfigurationManager.Instance.colorDictionary[i];
             Button newButton = colorButtonsList[i].GetComponent<Button>();
-            newButton.onClick.AddListener(() => SetColor(i));
+            newButton.onClick.AddListener(() => SetColor(currentIndex));
         }
     }
     public void GenerateMercSelectField()

@@ -40,9 +40,9 @@ public class PlayerConfigurationManager : MonoBehaviour
         playerConfigs[playerIndex].merc = mercTag;
     }
 
-    public void SetPlayerColor(int playerIndex, Color color)  //setting the color of our new player
+    public void SetPlayerColor(int playerIndex, int colorIndex)  //setting the color of our new player
     {
-        playerConfigs[playerIndex].color = color;
+        playerConfigs[playerIndex].color = colorDictionary[colorIndex];
     }
 
     public void ReadyPlayer(int index)   //readying up the player TODO: unreadying
