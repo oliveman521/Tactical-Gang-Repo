@@ -39,12 +39,24 @@ PrefabInstance:
       propertyPath: fireRate
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5180222169616134151, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
+      propertyPath: range
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180222169616134151, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
+      propertyPath: bulletHitMask.m_Bits
+      value: 4864
+      objectReference: {fileID: 0}
     - target: {fileID: 5180222169616134152, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1788773063751871192, guid: 684579c60ad2a36449ebc75ae71ecbe4, type: 3}
     - target: {fileID: 5180222170374784667, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8253650202417577194, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

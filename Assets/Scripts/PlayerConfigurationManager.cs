@@ -16,6 +16,8 @@ public class PlayerConfigurationManager : MonoBehaviour
     public MercData[] mercData;
     public Dictionary<MercTag, MercData> mercDictionary = new Dictionary<MercTag, MercData>();
 
+    public string nextLevel;
+
     private void Awake()
     {
         //setup the merc data dictionary
@@ -63,7 +65,7 @@ public class PlayerConfigurationManager : MonoBehaviour
         }
         if(readyPlayers == playerConfigs.Count)
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene(nextLevel);
         }
     }
     public void OnPlayerJoined(PlayerInput pi)

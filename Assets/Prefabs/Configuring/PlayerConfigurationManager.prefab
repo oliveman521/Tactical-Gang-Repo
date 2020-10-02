@@ -62,6 +62,9 @@ MonoBehaviour:
   - mercTag: 1
     mercPrefab: {fileID: 6805909586354256831, guid: 6daac446be5a17745a2ff8fe655d9fe4, type: 3}
     mercIcon: {fileID: 0}
+  - mercTag: 3
+    mercPrefab: {fileID: 1508997053659096417, guid: 9fce6993306eab5418795976b30ea1dd, type: 3}
+    mercIcon: {fileID: 0}
 --- !u!114 &2086314134516054521
 MonoBehaviour:
   m_ObjectHideFlags: 0

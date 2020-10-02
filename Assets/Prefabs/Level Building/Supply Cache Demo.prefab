@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9189870967768103860}
   m_Layer: 0
   m_Name: Supply Cache Demo
-  m_TagString: Untagged
+  m_TagString: Cache
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

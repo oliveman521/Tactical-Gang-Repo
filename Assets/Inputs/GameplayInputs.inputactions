@@ -43,7 +43,7 @@
                     "id": "41cfb2d8-41d4-4ef8-a526-7d0e68ae200e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "Menu",
