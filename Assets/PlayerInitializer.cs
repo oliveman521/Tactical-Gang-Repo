@@ -19,27 +19,30 @@ public class PlayerInitializer : MonoBehaviour
 
 
         //spawn all players
-        PlayerConfiguration[] playerConfigs = PlayerConfigurationManager.Instance.playerConfigs.ToArray();
-        foreach(PlayerConfiguration pc in playerConfigs)
+        if (PlayerConfigurationManager.Instance)
         {
-            Transform spawnPoint = PickSpawnPoint();
-            PlayerConfigurationManager.Instance.mercDictionary.TryGetValue(pc.merc, out MercData mercData);
-            if(mercData == null)
+            PlayerConfiguration[] playerConfigs = PlayerConfigurationManager.Instance.playerConfigs.ToArray();
+            foreach (PlayerConfiguration pc in playerConfigs)
             {
-                Debug.Log("Merc not in dictionary");
-            }
-            else
-            {
-                //spawn player
-                GameObject newPlayerObj = Instantiate(mercData.mercPrefab, spawnPoint.position, spawnPoint.rotation);
+                Transform spawnPoint = PickSpawnPoint();
+                PlayerConfigurationManager.Instance.mercDictionary.TryGetValue(pc.merc, out MercData mercData);
+                if (mercData == null)
+                {
+                    Debug.Log("Merc not in dictionary");
+                }
+                else
+                {
+                    //spawn player
+                    GameObject newPlayerObj = Instantiate(mercData.mercPrefab, spawnPoint.position, spawnPoint.rotation);
 
-                //set their color
-                newPlayerObj.GetComponent<SpriteRenderer>().color = pc.color;
+                    //set their color
+                    newPlayerObj.GetComponent<SpriteRenderer>().color = pc.color;
 
 
-                //configure controls from the player's prefab
-                pc.playerInput.actionEvents = newPlayerObj.GetComponent<PlayerInput>().actionEvents; //steal all of the action mapping from the player object
-                Destroy(newPlayerObj.GetComponent<PlayerInput>()); //delete the playerinput object from the player
+                    //configure controls from the player's prefab
+                    pc.playerInput.actionEvents = newPlayerObj.GetComponent<PlayerInput>().actionEvents; //steal all of the action mapping from the player object
+                    Destroy(newPlayerObj.GetComponent<PlayerInput>()); //delete the playerinput object from the player
+                }
             }
         }
     }

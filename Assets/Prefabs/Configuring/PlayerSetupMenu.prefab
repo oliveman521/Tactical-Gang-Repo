@@ -313,11 +313,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 04191ea9aaad9b0419c53f1a2a28b73a, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 7f9131c861659b74893bd66eab4789c8, type: 3}
   m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: -817901907112042014, guid: 04191ea9aaad9b0419c53f1a2a28b73a, type: 3}
-  m_SubmitAction: {fileID: 77701639388628982, guid: 04191ea9aaad9b0419c53f1a2a28b73a, type: 3}
-  m_CancelAction: {fileID: -8705872851048037536, guid: 04191ea9aaad9b0419c53f1a2a28b73a, type: 3}
+  m_MoveAction: {fileID: -817901907112042014, guid: 7f9131c861659b74893bd66eab4789c8, type: 3}
+  m_SubmitAction: {fileID: 77701639388628982, guid: 7f9131c861659b74893bd66eab4789c8, type: 3}
+  m_CancelAction: {fileID: -8705872851048037536, guid: 7f9131c861659b74893bd66eab4789c8, type: 3}
   m_LeftClickAction: {fileID: 0}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
