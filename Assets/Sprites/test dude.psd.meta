@@ -17,6 +17,18 @@ TextureImporter:
   - first:
       213: -1515967023839625394
     second: test dude_2
+  - first:
+      213: -4198664557764041243
+    second: test dude_2
+  - first:
+      213: -8908359532451171773
+    second: test dude_3
+  - first:
+      213: 3403897552299006257
+    second: test dude_3
+  - first:
+      213: 1788773063751871192
+    second: test dude_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -160,8 +172,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4f35d4160436fae0800000000000000
-      internalID: -1515967023839625394
+      spriteID: 5e5a37784d85bb5c0800000000000000
+      internalID: -4198664557764041243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1399a980ac21d3f20800000000000000
+      internalID: 3403897552299006257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8daa7b8cf9ff2d810800000000000000
+      internalID: 1788773063751871192
       vertices: []
       indices: 
       edges: []

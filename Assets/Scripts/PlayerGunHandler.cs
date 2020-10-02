@@ -5,7 +5,6 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerGunHandler : MonoBehaviour
 {
-    public AudioSource noAmmoSound;
     private GunBehavior equippedGun;
     private bool isShooting = false;
 
@@ -13,13 +12,27 @@ public class PlayerGunHandler : MonoBehaviour
     public float startAmmo;
     public float ammo;
 
+    private bool fullAuto;
+    private bool hasShot = false;
+
     private float rateOfFireCoutner;
     // Start is called before the first frame update
     void Start()
     {
 
         ammo = startAmmo;
-        equippedGun = GetComponentInChildren<GunBehavior>();
+        try
+        {
+            equippedGun = GetComponentInChildren<GunBehavior>();
+            fullAuto = equippedGun.fullAuto;
+        }
+        catch
+        {
+            Debug.Log("No gun found");
+            Destroy(this);
+        }
+
+
     }
 
     // Update is called once per frame
@@ -27,16 +40,25 @@ public class PlayerGunHandler : MonoBehaviour
     {
         rateOfFireCoutner += Time.deltaTime;
 
-        if (isShooting && ammo >= 1 && rateOfFireCoutner > 1/equippedGun.fireRate)
+        if (hasShot == false || fullAuto == true) //check for full/semi auto settings
         {
-            equippedGun.Shoot();
-            ammo -= 1;
-            rateOfFireCoutner = 0;
-        }
-        else if(isShooting && rateOfFireCoutner > 1 / equippedGun.fireRate)
-        {
-            noAmmoSound.Play();
-            rateOfFireCoutner = 0;
+            
+            if (isShooting && ammo >= 1 && rateOfFireCoutner > 1 / equippedGun.fireRate) //shoot if   1. player is pulling trigger   2. PLayer has ammo    3. Enough time has passed since the last shot
+            {
+
+                equippedGun.Shoot();
+                ammo -= 1;
+                rateOfFireCoutner = 0;
+                hasShot = true;
+
+            }
+            else if (isShooting && rateOfFireCoutner > 1 / equippedGun.fireRate)
+            {
+                equippedGun.PlayNoAmmoSound();
+                rateOfFireCoutner = 0;
+                hasShot = true;
+            }
+            
         }
     }
 
@@ -51,8 +73,13 @@ public class PlayerGunHandler : MonoBehaviour
     public void OnShoot(CallbackContext ctx)
     {
         if (ctx.performed)
+        {
             isShooting = true;
+        }
         if (ctx.canceled)
+        {
             isShooting = false;
+            hasShot = false;
+        }
     }
 }

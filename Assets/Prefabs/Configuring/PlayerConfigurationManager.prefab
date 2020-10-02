@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e886e7cb23cfa747be29c5da944d0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayers: 2
+  FPS: 0
   colorDictionary:
   - {r: 0.2, g: 0.65882355, b: 0.78039217, a: 1}
   - {r: 0.32156864, g: 0.8901961, b: 0.88235295, a: 1}
@@ -59,6 +59,9 @@ MonoBehaviour:
   - mercTag: 0
     mercPrefab: {fileID: 6042718314747823153, guid: b7756c93b83fe8447a4249daf3335b80, type: 3}
     mercIcon: {fileID: 0}
+  - mercTag: 1
+    mercPrefab: {fileID: 6805909586354256831, guid: 6daac446be5a17745a2ff8fe655d9fe4, type: 3}
+    mercIcon: {fileID: 0}
 --- !u!114 &2086314134516054521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 0
   m_MaxPlayerCount: -1
   m_AllowJoining: 1
   m_JoinBehavior: 0
@@ -80,11 +83,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2833725351281114006}
         m_TargetAssemblyTypeName: PlayerConfigurationManager, Assembly-CSharp
-        m_MethodName: HandlePlayerJoin
-        m_Mode: 0
+        m_MethodName: OnPlayerJoin
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.InputSystem.PlayerInput,
+            Unity.InputSystem
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

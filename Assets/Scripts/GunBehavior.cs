@@ -7,6 +7,7 @@ using TMPro;
 
 public class GunBehavior : MonoBehaviour
 {
+    public bool fullAuto = true;
     public float bulletDamage;
     public float bulletKnockBack;
     public float fireRate;
@@ -21,11 +22,15 @@ public class GunBehavior : MonoBehaviour
     private int gunfireSourceIndex;
     private AudioSource[] gunfireAudioSources;
 
+    public GameObject gunshotSounds;
+    public AudioSource reloadSound;
+    public AudioSource noAmmoSound;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        gunfireAudioSources = GetComponents<AudioSource>();
+        gunfireAudioSources = gunshotSounds.GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,13 +45,15 @@ public class GunBehavior : MonoBehaviour
     public void Shoot()
     {
         //play sound (multiple sources are cycled through so they can overlap)
-            gunfireAudioSources[gunfireSourceIndex].pitch = UnityEngine.Random.Range(.8f, 1.2f);
-            gunfireAudioSources[gunfireSourceIndex].Play();
-            gunfireSourceIndex++;
-            if (gunfireSourceIndex >= gunfireAudioSources.Length)
-            {
-                gunfireSourceIndex = 0;
-            }
+        gunfireAudioSources[gunfireSourceIndex].pitch = UnityEngine.Random.Range(.8f, 1.2f);
+        gunfireAudioSources[gunfireSourceIndex].Play();
+        gunfireSourceIndex++;
+        if (gunfireSourceIndex >= gunfireAudioSources.Length)
+        {
+             gunfireSourceIndex = 0;
+        }
+
+
             //generate the angle and distance this bullet will shoot
             int trueAngle = UtilsClass.GetAngleFromVector(firePoint.up);
             Vector2 noisyAngle = UtilsClass.GetVectorFromAngle(trueAngle + (int)Random.Range(-angleVariability / 2, angleVariability / 2));
@@ -77,7 +84,7 @@ public class GunBehavior : MonoBehaviour
                 }
 
             }
-            else
+            else //draw bullet trail for missed bullet
             {
                 Vector3 missPoistionFromBarrel = noisyRange * noisyAngle.normalized;
                 line.SetPosition(0, firePoint.position);
@@ -88,5 +95,10 @@ public class GunBehavior : MonoBehaviour
     {
         line.SetPosition(0,Vector3.zero);
         line.SetPosition(1,Vector3.zero);
+    }
+
+    public void PlayNoAmmoSound()
+    {
+        noAmmoSound.Play();
     }
 }

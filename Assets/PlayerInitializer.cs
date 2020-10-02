@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInitializer : MonoBehaviour
@@ -29,9 +30,16 @@ public class PlayerInitializer : MonoBehaviour
             }
             else
             {
+                //spawn player
                 GameObject newPlayerObj = Instantiate(mercData.mercPrefab, spawnPoint.position, spawnPoint.rotation);
-                newPlayerObj.GetComponent<PlayerInput>().actions = pc.playerInput.actions;
+
+                //set their color
                 newPlayerObj.GetComponent<SpriteRenderer>().color = pc.color;
+
+
+                //configure controls from the player's prefab
+                pc.playerInput.actionEvents = newPlayerObj.GetComponent<PlayerInput>().actionEvents; //steal all of the action mapping from the player object
+                Destroy(newPlayerObj.GetComponent<PlayerInput>()); //delete the playerinput object from the player
             }
         }
     }

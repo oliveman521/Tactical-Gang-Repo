@@ -73,6 +73,15 @@ public class PlayerSetupMenuController : MonoBehaviour
     }
     public void NextMenu()
     {
+        try
+        {
+            GameObject upcomingMenu = playerSetupMenus[currentMenu + 1];
+        }
+        catch
+        {
+            Debug.Log("The Menu you are trying to reach doesnt exist");
+            return;
+        }
         playerSetupMenus[currentMenu].SetActive(false);
         currentMenu+=1;
         playerSetupMenus[currentMenu].SetActive(true);
@@ -81,6 +90,16 @@ public class PlayerSetupMenuController : MonoBehaviour
     }
     public void PastMenu()
     {
+        try
+        {
+            GameObject upcomingMenu = playerSetupMenus[currentMenu - 1];
+        }
+        catch
+        {
+            Debug.Log("The Menu you are trying to reach doesnt exist");
+            return;
+        }
+        Debug.Log("Past Menu triggered");
         playerSetupMenus[currentMenu].SetActive(false);
         currentMenu -= 1;
         playerSetupMenus[currentMenu].SetActive(true);
@@ -98,8 +117,6 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (!inputEnabled)
             return;
-
-        Debug.Log(colorIndex);
         PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, colorIndex);
         NextMenu();
     }

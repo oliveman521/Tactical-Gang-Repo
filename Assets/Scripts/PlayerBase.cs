@@ -32,7 +32,9 @@ public class PlayerBase : MonoBehaviour
     private float scopeStartAngle;
     private bool isScoped = false;
     private bool lastIsScoped = false;
-    // Start is called before the first frame update
+
+
+
     void Start()
     {
         fieldOfView = GetComponentInChildren<FieldOfView>();

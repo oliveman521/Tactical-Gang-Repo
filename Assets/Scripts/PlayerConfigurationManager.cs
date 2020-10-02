@@ -11,8 +11,6 @@ public class PlayerConfigurationManager : MonoBehaviour
 {
     public float FPS;
     public List<PlayerConfiguration> playerConfigs;
-    [SerializeField]
-    private int maxPlayers = 2;
     public static PlayerConfigurationManager Instance { get; private set; }
     public Color[] colorDictionary;
     public MercData[] mercData;
@@ -20,10 +18,13 @@ public class PlayerConfigurationManager : MonoBehaviour
 
     private void Awake()
     {
+        //setup the merc data dictionary
         foreach(MercData mercDataPoint in mercData)
         {
             mercDictionary.Add(mercDataPoint.mercTag, mercDataPoint);
         }
+
+        //Creating the singleton of this script (with basic check)
         if(Instance != null)
         {
             Debug.Log("SINGLETON - Trying to create another instance - error");
@@ -65,24 +66,28 @@ public class PlayerConfigurationManager : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
         }
     }
-    public void HandlePlayerJoin(PlayerInput pi)
+    public void OnPlayerJoined(PlayerInput pi)
     {
         Debug.Log("Player Joined!!" + pi.playerIndex);
         pi.transform.SetParent(transform);
 
         //check if the player is new. MAke sure their index isnt already saved in playerConfigs
         bool isNewPlayer = true;
-        foreach(PlayerConfiguration playerConfig in playerConfigs)
+        if (playerConfigs.Count > 0)
         {
-            if (playerConfig.index == pi.playerIndex)
+            foreach (PlayerConfiguration playerConfig in playerConfigs)
             {
-                isNewPlayer = false;
+                if (playerConfig.index == pi.playerIndex)
+                {
+                    isNewPlayer = false;
+                }
             }
         }
-        if(isNewPlayer)
+        if (isNewPlayer)
         {
             playerConfigs.Add(new PlayerConfiguration(pi));
         }
+        
     }
 }
 

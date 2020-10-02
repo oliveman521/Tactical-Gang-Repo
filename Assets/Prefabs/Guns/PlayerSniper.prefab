@@ -12,14 +12,6 @@ PrefabInstance:
       value: PlayerSniper
       objectReference: {fileID: 0}
     - target: {fileID: 6124237602765183594, guid: 47832b5bef4f8f74eafdc7ec3dd8e201, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6124237602765183594, guid: 47832b5bef4f8f74eafdc7ec3dd8e201, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6124237602765183594, guid: 47832b5bef4f8f74eafdc7ec3dd8e201, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
