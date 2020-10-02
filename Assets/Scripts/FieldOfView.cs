@@ -26,7 +26,7 @@ public class FieldOfView : MonoBehaviour
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
 
-        float wallViewDist = .125f;
+        float wallViewDist = .25f;
         Vector3 origin = this.origin;
         int raycount = (int)fov;
         float angle = startingAngle;

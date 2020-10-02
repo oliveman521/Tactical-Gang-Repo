@@ -65,12 +65,16 @@ public class GunBehavior : MonoBehaviour
             {
                 line.SetPosition(0, firePoint.position);
                 line.SetPosition(1, hitInfo.point);
-                if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+                if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Walls") || hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Obsticles"))
                 {
+                    try
+                    {
                     Vector3 hitPosition = Vector3.zero;
                     hitPosition.x = hitInfo.point.x + noisyAngle.normalized.x * .01f;
                     hitPosition.y = hitInfo.point.y + noisyAngle.normalized.y * .01f; ;
                     hitInfo.collider.gameObject.GetComponent<DestructableTilemap>().BreakBlock(hitPosition);
+                    }
+                    catch { }
                 }
                 if(hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {

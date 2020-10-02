@@ -50,6 +50,9 @@ TagManager:
   - name: Players
     uniqueID: 2243770379
     locked: 0
+  - name: Obsticles
+    uniqueID: 2326505797
+    locked: 0
   - name: Walls
     uniqueID: 2134529397
     locked: 0
