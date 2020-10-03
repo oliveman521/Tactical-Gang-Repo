@@ -60,8 +60,8 @@ public class PlayerBase : MonoBehaviour
 
 
         //update fov game object
-        fieldOfView.SetOrigin(transform.position);
-        fieldOfView.SetAimDirection(transform.rotation.eulerAngles.z + 90);
+        //fieldOfView.SetOrigin(transform.position);
+        //fieldOfView.SetAimDirection(transform.rotation.eulerAngles.z + 90);
     }
 
     //Movement & rotation

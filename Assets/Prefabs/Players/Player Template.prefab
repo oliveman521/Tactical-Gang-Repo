@@ -5244,6 +5244,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FOV
       objectReference: {fileID: 0}
+    - target: {fileID: 6186623849011792581, guid: c3a8d0d510cc0fc4e9c3cefd51cc9b93, type: 3}
+      propertyPath: fov
+      value: 121
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3a8d0d510cc0fc4e9c3cefd51cc9b93, type: 3}
 --- !u!4 &6245959940075011828 stripped

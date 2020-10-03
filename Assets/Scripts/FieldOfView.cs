@@ -23,36 +23,47 @@ public class FieldOfView : MonoBehaviour
     void LateUpdate()
     {
         //maintain home location
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
+        //transform.position = Vector3.zero;
+        //transform.rotation = Quaternion.identity;
 
         float wallViewDist = .25f;
-        Vector3 origin = this.origin;
         int raycount = (int)fov;
-        float angle = startingAngle;
+        float angle = UtilsClass.GetAngleFromVector(transform.up) + fov / 2;
         float angleIncrease = fov / raycount;
 
         Vector3[] verticies = new Vector3[raycount + 1 + 1];
         Vector2[] uv = new Vector2[verticies.Length];
         int[] triangles = new int[raycount * 3];
 
-        verticies[0] = origin;
+        verticies[0] = Vector3.zero;
 
         int vertexIndex = 1;
         int triangleIndex = 0;
         for (int i = 0; i <= raycount; i++)
         {
             Vector3 vertex;
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, UtilsClass.GetVectorFromAngle(angle), viewDistance, solidsMask);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, UtilsClass.GetVectorFromAngle(angle), viewDistance, solidsMask);
             if (raycastHit2D.collider == null)
             {
                 //no hit
-                vertex = origin + UtilsClass.GetVectorFromAngle(angle) * viewDistance;
+                float trueMissPointAngle = angle;
+                float trueFacingAngle = transform.rotation.eulerAngles.z;
+                Vector2 angleOfDrawnArea = UtilsClass.GetVectorFromAngle(trueMissPointAngle - trueFacingAngle);
+
+                vertex = angleOfDrawnArea * viewDistance;
             }
             else
             {
+
+                float lengthOfDrawnArea = (raycastHit2D.point + (Vector2)(UtilsClass.GetVectorFromAngle(angle).normalized * wallViewDist) - (Vector2)transform.position).magnitude;
+
+                float trueAngleToPoint = UtilsClass.GetAngleFromVector(raycastHit2D.point - (Vector2)transform.position);
+                float trueFacingAngle = transform.rotation.eulerAngles.z;
+                Vector2 angleOfDrawnArea = UtilsClass.GetVectorFromAngle(trueAngleToPoint - trueFacingAngle);// RelativeToPlayerFacing
+
                 //hit something
-                vertex = raycastHit2D.point + (Vector2)(UtilsClass.GetVectorFromAngle(angle).normalized * wallViewDist);
+                vertex = angleOfDrawnArea * lengthOfDrawnArea;
+
             }
             verticies[vertexIndex] = vertex;
 
