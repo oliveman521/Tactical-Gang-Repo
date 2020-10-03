@@ -65,6 +65,10 @@ MonoBehaviour:
   - mercTag: 3
     mercPrefab: {fileID: 1508997053659096417, guid: 9fce6993306eab5418795976b30ea1dd, type: 3}
     mercIcon: {fileID: 0}
+  - mercTag: 2
+    mercPrefab: {fileID: 6778221233842398457, guid: 096c11af35b2b0c4abd6071808c6bfee, type: 3}
+    mercIcon: {fileID: 0}
+  nextLevel: SampleScene
 --- !u!114 &2086314134516054521
 MonoBehaviour:
   m_ObjectHideFlags: 0

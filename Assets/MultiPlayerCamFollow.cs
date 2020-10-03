@@ -8,12 +8,12 @@ using UnityEngine;
 public class MultiPlayerCamFollow : MonoBehaviour
 {
     private List<Transform> targets = new List<Transform>();
-    public Vector3 offset;
+    public Vector3 offset = new Vector3(0,0,-10);
     private Vector3 velocity;
     public float smoothTime = .25f;
 
-    public float minZoom = 5f;
-    public float maxZoom = 10f;
+    public float minZoom = 8f;
+    public float maxZoom = 12f;
     private Camera cam;
     // Start is called before the first frame update
     void Start()
