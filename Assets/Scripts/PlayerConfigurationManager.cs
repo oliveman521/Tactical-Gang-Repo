@@ -119,9 +119,10 @@ public enum MercTag
 {
     Gunner,
     Sniper,
-    Medic,
+    Demoman,
     Mule,
     Rat,
     Ops,
-    Turtle,
+    Turtle, 
+    Medic,
 }
