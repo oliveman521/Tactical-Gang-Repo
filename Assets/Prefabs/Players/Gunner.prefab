@@ -15,6 +15,7 @@ MonoBehaviour:
   maxAmmo: 30
   startAmmo: 20
   ammo: 0
+  ammoPerSupply: 2
 --- !u!1001 &851757001740367414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30,6 +31,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676096, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -807185511360233624, guid: 7d8697d7241ff234598f28dc1ae6dcaa, type: 3}
     - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -77,6 +82,10 @@ PrefabInstance:
     - target: {fileID: 6345009132644676111, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074725705608702070, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
@@ -140,6 +149,10 @@ PrefabInstance:
     - target: {fileID: 803104031018247082, guid: 8deb293efc7f5f14b9969c112f809715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 803104031018247082, guid: 8deb293efc7f5f14b9969c112f809715, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8deb293efc7f5f14b9969c112f809715, type: 3}

@@ -62,7 +62,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1508997053659096425}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2151493649768354248
 PrefabInstance:
@@ -77,11 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1521241074452506909, guid: af2de210bdf2f9d499c4e104dafdb224, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03125
+      value: 0.03125
       objectReference: {fileID: 0}
     - target: {fileID: 1521241074452506909, guid: af2de210bdf2f9d499c4e104dafdb224, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.625
+      value: 0.5625
       objectReference: {fileID: 0}
     - target: {fileID: 1521241074452506909, guid: af2de210bdf2f9d499c4e104dafdb224, type: 3}
       propertyPath: m_LocalPosition.z
@@ -132,6 +132,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6345009132644676096, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1580201579327368147, guid: a2d873edcbc5d294593493c281795ebd, type: 3}
     - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -231,6 +235,14 @@ PrefabInstance:
     - target: {fileID: 6345009132644676111, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6346716322256777833, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6746830865447303542, guid: a2d873edcbc5d294593493c281795ebd, type: 3}
+    - target: {fileID: 7074725705608702070, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}

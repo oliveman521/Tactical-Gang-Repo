@@ -331,7 +331,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2833725351281114006, guid: d61163dee7cc1974da8eecb290cc8b68, type: 3}
       propertyPath: nextLevel
-      value: Level 3
+      value: SampleScene
       objectReference: {fileID: 0}
     - target: {fileID: 4761594397543821561, guid: d61163dee7cc1974da8eecb290cc8b68, type: 3}
       propertyPath: m_RootOrder

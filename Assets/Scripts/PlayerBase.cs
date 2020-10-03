@@ -16,6 +16,7 @@ public class PlayerBase : MonoBehaviour
     private float moveSpeedModifierFromDamage = 1;
 
     [Header("References")]
+    public SpriteRenderer playerColorOverlay;
     private ParticleSystem bloodTrail;
     private FieldOfView fieldOfView;
     private Rigidbody2D rb = new Rigidbody2D();
@@ -40,7 +41,7 @@ public class PlayerBase : MonoBehaviour
         fieldOfView = GetComponentInChildren<FieldOfView>();
         rb = GetComponent<Rigidbody2D>();
         bloodTrail = GetComponent<ParticleSystem>();
-        playerColor = GetComponent<SpriteRenderer>().color;
+        playerColor = playerColorOverlay.color;
         ParticleSystem.MainModule bloodTrailMain = bloodTrail.main;
         bloodTrailMain.startColor = playerColor;
 
@@ -123,6 +124,10 @@ public class PlayerBase : MonoBehaviour
     }
     public void Aim(CallbackContext value)
     {
-        aim = value.ReadValue<Vector2>();
+        Vector2 aimVal = value.ReadValue<Vector2>();
+        if (aimVal != Vector2.zero)
+        {
+            aim = aimVal;
+        }
     }
 }

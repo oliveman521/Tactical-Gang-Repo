@@ -36,7 +36,7 @@ public class PlayerInitializer : MonoBehaviour
                     GameObject newPlayerObj = Instantiate(mercData.mercPrefab, spawnPoint.position, spawnPoint.rotation);
 
                     //set their color
-                    newPlayerObj.GetComponent<SpriteRenderer>().color = pc.color;
+                    newPlayerObj.GetComponent<PlayerBase>().playerColorOverlay.color = pc.color;
 
 
                     //configure controls from the player's prefab
