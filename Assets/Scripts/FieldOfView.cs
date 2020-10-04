@@ -8,8 +8,6 @@ public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private LayerMask solidsMask;
     private Mesh mesh;
-    private Vector3 origin = Vector3.zero;
-    private float startingAngle = 0;
     public float fov = 90f;
     public float viewDistance = 20f;
     // Start is called before the first frame update
@@ -84,13 +82,4 @@ public class FieldOfView : MonoBehaviour
         mesh.triangles = triangles;
     }
 
-    public void SetOrigin(Vector3 origin)
-    {
-        this.origin = origin;
-    }
-
-    public void SetAimDirection(float aimDirection)
-    {
-        startingAngle = (aimDirection) + fov / 2;
-    }
 }
