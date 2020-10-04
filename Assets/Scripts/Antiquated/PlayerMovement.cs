@@ -89,11 +89,6 @@ public class PlayerMovement : MonoBehaviour
             desiredRotation = Vector2.SignedAngle(Vector2.up, aim);
         }
         rb.rotation = desiredRotation;
-
-
-        //update fov game object
-        fieldOfView.SetOrigin(transform.position);
-        fieldOfView.SetAimDirection(transform.rotation.eulerAngles.z + 90);
     }
 
     // Update is called 50 times per second

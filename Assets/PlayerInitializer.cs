@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerInitializer : MonoBehaviour
 {
     private List<Transform> availableSpawnPoints = new List<Transform>();
+    public float FPS;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +51,7 @@ public class PlayerInitializer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        FPS = (1f / Time.unscaledDeltaTime);
     }
     Transform PickSpawnPoint()
     {

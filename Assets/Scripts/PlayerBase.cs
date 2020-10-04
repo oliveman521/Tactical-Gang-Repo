@@ -18,7 +18,6 @@ public class PlayerBase : MonoBehaviour
     [Header("References")]
     public SpriteRenderer playerColorOverlay;
     private ParticleSystem bloodTrail;
-    private FieldOfView fieldOfView;
     private Rigidbody2D rb = new Rigidbody2D();
     private Color playerColor;
 
@@ -38,7 +37,6 @@ public class PlayerBase : MonoBehaviour
 
     void Start()
     {
-        fieldOfView = GetComponentInChildren<FieldOfView>();
         rb = GetComponent<Rigidbody2D>();
         bloodTrail = GetComponent<ParticleSystem>();
         playerColor = playerColorOverlay.color;
@@ -59,9 +57,6 @@ public class PlayerBase : MonoBehaviour
         rb.rotation = desiredRotation;
 
 
-        //update fov game object
-        //fieldOfView.SetOrigin(transform.position);
-        //fieldOfView.SetAimDirection(transform.rotation.eulerAngles.z + 90);
     }
 
     //Movement & rotation
