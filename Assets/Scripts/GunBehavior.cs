@@ -7,52 +7,59 @@ using TMPro;
 
 public class GunBehavior : MonoBehaviour
 {
+    [Header("Basic Gun Settings")]
     public bool fullAuto = true;
     public float bulletDamage;
     public float bulletKnockBack;
     public float fireRate;
-    private float fireRateCounter;
-    public float trailFadeTime;
-    public Transform firePoint;
-    public LineRenderer line;
     public float range;
+
+    [Header("Advanced")]
+    public float bulletsPerShot = 1;
+    public LayerMask bulletHitMask;
     public float rangeVariability;
     public float angleVariability;
-    public LayerMask bulletHitMask;
-    private int gunfireSourceIndex;
-    private AudioSource[] gunfireAudioSources;
+    public float trailFadeTime;
+    private float timeSinceShotCounter;
 
+    [Header("Audio")]
     public GameObject gunshotSounds;
     public AudioSource reloadSound;
     public AudioSource noAmmoSound;
+    private AudioSource[] gunfireAudioSources;
+    private int gunfireAudioSourceIndex = 0;
 
+    [Header("Other References")]
+    public Transform firePoint;
+    public LineRenderer[] bulletTrailLines;
+    private int bulletTrailIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         gunfireAudioSources = gunshotSounds.GetComponents<AudioSource>();
+        if (bulletsPerShot > bulletTrailLines.Length)
+            Debug.Log("Gun does not have enough line renderes for the number of shots you are trying to shoot at once. Will still function correctly, but will not visually match");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        fireRateCounter += Time.deltaTime;
-        if(fireRateCounter > trailFadeTime)
-        {
-            HideBulletTrail();
-        }
-    }
     public void Shoot()
     {
-        //play sound (multiple sources are cycled through so they can overlap)
-        gunfireAudioSources[gunfireSourceIndex].pitch = UnityEngine.Random.Range(.8f, 1.2f);
-        gunfireAudioSources[gunfireSourceIndex].Play();
-        gunfireSourceIndex++;
-        if (gunfireSourceIndex >= gunfireAudioSources.Length)
+        //play gunshot sound (multiple sources are cycled through so they can overlap)
+        gunfireAudioSources[gunfireAudioSourceIndex].pitch = UnityEngine.Random.Range(.8f, 1.2f);
+        gunfireAudioSources[gunfireAudioSourceIndex].Play();
+        gunfireAudioSourceIndex++;
+        if (gunfireAudioSourceIndex >= gunfireAudioSources.Length)
         {
-             gunfireSourceIndex = 0;
+             gunfireAudioSourceIndex = 0;
         }
 
+        for (int i = 0; i < bulletsPerShot; i++)
+        {
+            //select a bullet trail line. multiple can be used so they are on screen at the same time.
+            LineRenderer currentBulletTrailLine = bulletTrailLines[bulletTrailIndex];
+            bulletTrailIndex++;
+            if (bulletTrailIndex >= bulletTrailLines.Length)
+                bulletTrailIndex = 0;
 
             //generate the angle and distance this bullet will shoot
             int trueAngle = UtilsClass.GetAngleFromVector(firePoint.up);
@@ -63,20 +70,20 @@ public class GunBehavior : MonoBehaviour
             RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, noisyAngle, noisyRange, bulletHitMask);
             if (hitInfo)
             {
-                line.SetPosition(0, firePoint.position);
-                line.SetPosition(1, hitInfo.point);
+                currentBulletTrailLine.SetPosition(0, firePoint.position);
+                currentBulletTrailLine.SetPosition(1, hitInfo.point);
                 if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Walls") || hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Obsticles"))
                 {
                     try
                     {
-                    Vector3 hitPosition = Vector3.zero;
-                    hitPosition.x = hitInfo.point.x + noisyAngle.normalized.x * .01f;
-                    hitPosition.y = hitInfo.point.y + noisyAngle.normalized.y * .01f; ;
-                    hitInfo.collider.gameObject.GetComponent<DestructableTilemap>().BreakBlock(hitPosition);
+                        Vector3 hitPosition = Vector3.zero;
+                        hitPosition.x = hitInfo.point.x + noisyAngle.normalized.x * .01f;
+                        hitPosition.y = hitInfo.point.y + noisyAngle.normalized.y * .01f; ;
+                        hitInfo.collider.gameObject.GetComponent<DestructableTilemap>().BreakBlock(hitPosition);
                     }
                     catch { }
                 }
-                if(hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+                if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     hitInfo.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(noisyAngle.normalized * bulletKnockBack);
                     hitInfo.collider.gameObject.GetComponent<PlayerBase>().Damage(bulletDamage);
@@ -91,14 +98,17 @@ public class GunBehavior : MonoBehaviour
             else //draw bullet trail for missed bullet
             {
                 Vector3 missPoistionFromBarrel = noisyRange * noisyAngle.normalized;
-                line.SetPosition(0, firePoint.position);
-                line.SetPosition(1, firePoint.position + missPoistionFromBarrel);
+                currentBulletTrailLine.SetPosition(0, firePoint.position);
+                currentBulletTrailLine.SetPosition(1, firePoint.position + missPoistionFromBarrel);
             }
+            StartCoroutine(HideBulletTrail(currentBulletTrailLine));
+        }
     }
-    void HideBulletTrail()
+    IEnumerator HideBulletTrail(LineRenderer trail)
     {
-        line.SetPosition(0,Vector3.zero);
-        line.SetPosition(1,Vector3.zero);
+        yield return new WaitForSeconds(trailFadeTime);
+        trail.SetPosition(0,Vector3.zero);
+        trail.SetPosition(1,Vector3.zero);
     }
 
     public void PlayNoAmmoSound()

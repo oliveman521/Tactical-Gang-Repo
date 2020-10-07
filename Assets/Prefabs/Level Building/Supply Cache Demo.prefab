@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6460753941134861794}
   - component: {fileID: 6537291677427627954}
   - component: {fileID: 9189870967768103860}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Supply Cache Demo
   m_TagString: Cache
   m_Icon: {fileID: 0}
@@ -186,6 +186,10 @@ PrefabInstance:
     - target: {fileID: 5556400731274551299, guid: c58783365da75804a8c4f64306ca47d6, type: 3}
       propertyPath: m_Name
       value: Sparkle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556400731274551299, guid: c58783365da75804a8c4f64306ca47d6, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c58783365da75804a8c4f64306ca47d6, type: 3}

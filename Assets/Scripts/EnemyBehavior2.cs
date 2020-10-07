@@ -1,7 +1,9 @@
 ﻿using CodeMonkey.Utils;
 using Pathfinding;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [Serializable]
@@ -92,6 +94,8 @@ public class EnemyBehavior2 : MonoBehaviour
         {
             pointsOfInterest.Add(POIobjects[i].GetComponent<Transform>());
         }
+        //start up cycle to rescan the area around enemies, makes it so other enemies shouldn't path through one-another
+        StartCoroutine(RescanAreaAroundEnemyOnInterval(.3f));
     }
 
     // Update is called once per frame
@@ -391,6 +395,22 @@ public class EnemyBehavior2 : MonoBehaviour
 
         //return direction angle for use of setting desired angle
         return angleOfMovement;
+    }
+    IEnumerator RescanAreaAroundEnemyOnInterval(float interval)
+    {
+        while (true)
+        {
+            RescanArea(transform.position, new Vector3(1.5f,1.5f,1));
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    public void RescanArea(Vector3 center, Vector3 dimensions)
+    {
+        Bounds rescanBounds = new Bounds(center, dimensions);
+        var guo = new GraphUpdateObject(rescanBounds);
+        // Set some settings
+        guo.updatePhysics = true;
+        AstarPath.active.UpdateGraphs(guo);
     }
 
     //health & dmg

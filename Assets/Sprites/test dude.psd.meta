@@ -29,6 +29,21 @@ TextureImporter:
   - first:
       213: 1788773063751871192
     second: test dude_4
+  - first:
+      213: -6906877083369665489
+    second: test dude_4
+  - first:
+      213: -1817312389172844476
+    second: test dude_5
+  - first:
+      213: 5820528327777823902
+    second: test dude_6
+  - first:
+      213: -5337455985707878080
+    second: test dude_7
+  - first:
+      213: 8180519756340941356
+    second: test dude_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -214,8 +229,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8daa7b8cf9ff2d810800000000000000
-      internalID: 1788773063751871192
+      spriteID: f2c077a03e7d520a0800000000000000
+      internalID: -6906877083369665489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 448af65b20c97c6e0800000000000000
+      internalID: -1817312389172844476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9cab46fcaba6c050800000000000000
+      internalID: 5820528327777823902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049799f5f0c8de5b0800000000000000
+      internalID: -5337455985707878080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: test dude_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2254ca406b078170800000000000000
+      internalID: 8180519756340941356
       vertices: []
       indices: 
       edges: []
