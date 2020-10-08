@@ -12,23 +12,19 @@ public class PlayerSetupMenuController : MonoBehaviour
     private int playerIndex;
 
     [SerializeField]
-    private TextMeshProUGUI titleText;
+    private TextMeshProUGUI titleText = null;
     [SerializeField]
-    private GameObject readyPanel;
+    private Button readyButton = null;
     [SerializeField]
-    private GameObject menuPanel;
+    private GameObject readyConfirmation = null;
     [SerializeField]
-    private Button readyButton;
+    private GameObject colorButtonPrefab = null;
     [SerializeField]
-    private GameObject readyConfirmation;
+    private GameObject colorButtonLayoutGroup = null;
     [SerializeField]
-    private GameObject colorButtonPrefab;
+    private GameObject mercButtonPrefab = null;
     [SerializeField]
-    private GameObject colorButtonLayoutGroup;
-    [SerializeField]
-    private GameObject mercButtonPrefab;
-    [SerializeField]
-    private GameObject mercButtonLayoutGroup;
+    private GameObject mercButtonLayoutGroup = null;
 
     private MultiplayerEventSystem mpEventSystem;
     private InputSystemUIInputModule uiInputModule;
@@ -110,14 +106,14 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (!inputEnabled)
             return;
-        PlayerConfigurationManager.Instance.SetMerc(playerIndex, mercTag);
+        GameManager.Instance.SetMerc(playerIndex, mercTag);
         NextMenu();
     }
     public void SetColor(int colorIndex)
     {
         if (!inputEnabled)
             return;
-        PlayerConfigurationManager.Instance.SetPlayerColor(playerIndex, colorIndex);
+        GameManager.Instance.SetPlayerColor(playerIndex, colorIndex);
         NextMenu();
     }
     public void UpdateOutline()
@@ -134,18 +130,18 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (!inputEnabled)
             return;
-        PlayerConfigurationManager.Instance.ReadyPlayer(playerIndex);
+        GameManager.Instance.ReadyPlayer(playerIndex);
         readyButton.gameObject.SetActive(false);
         readyConfirmation.SetActive(true);
         readyConfirmation.GetComponent<TextMeshProUGUI>().SetText("Player " + (playerIndex+1).ToString() + " is Ready.");
     }
     public void GenerateColorSelectField()
     {
-        for (int i = 0; i < PlayerConfigurationManager.Instance.colorDictionary.Length; i++)
+        for (int i = 0; i < GameManager.Instance.mercColorDictionary.Length; i++)
         {
             int currentIndex = i;
             colorButtonsList.Add(Instantiate(colorButtonPrefab, colorButtonLayoutGroup.transform));
-            colorButtonsList[i].GetComponent<Image>().color = PlayerConfigurationManager.Instance.colorDictionary[i];
+            colorButtonsList[i].GetComponent<Image>().color = GameManager.Instance.mercColorDictionary[i];
             Button newButton = colorButtonsList[i].GetComponent<Button>();
             newButton.onClick.AddListener(() => SetColor(currentIndex));
         }

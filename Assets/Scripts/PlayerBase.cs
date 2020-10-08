@@ -21,7 +21,6 @@ public class PlayerBase : MonoBehaviour
     private Rigidbody2D rb = new Rigidbody2D();
     private Color playerColor;
 
-
     [Header("Health")]
     public float maxHealth = 10;
     public float health = 10;

@@ -4,7 +4,6 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SceneManagement;
-using System.Runtime.InteropServices.ComTypes;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement & Rotation")]
     public float startMoveSpeed = .1f;
     public float moveSpeed = .1f;
-    Vector2 movement;
-    Vector2 aim;
+    Vector2 movement = Vector2.zero;
+    Vector2 aim = Vector2.zero;
     private float desiredRotation = 0;
     //move speed modifiers (msm)
     private float msmFromDamage = 1;

@@ -7,16 +7,18 @@ using UnityEngine.InputSystem.UI;
 public class SpawnPlayerSetupMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerSetupPanelPrefab;
-    public PlayerInput input;
+    private GameObject playerSetupMenuPrefab;
     private void Awake()
     {
         var rootMenu = GameObject.Find("Main Layout");
         if (rootMenu != null)
         {
-            var menu = Instantiate(playerSetupPanelPrefab, rootMenu.transform);
-            input.uiInputModule = menu.GetComponentInChildren<InputSystemUIInputModule>();
-            menu.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(input.playerIndex);
+            foreach (PlayerConfiguration playerConfig in GameManager.Instance.playerConfigs)
+            {
+                var menu = Instantiate(playerSetupMenuPrefab, rootMenu.transform);
+                playerConfig.playerInput.uiInputModule = menu.GetComponentInChildren<InputSystemUIInputModule>();
+                menu.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(playerConfig.playerInput.playerIndex);
+            }
         }
     }
 

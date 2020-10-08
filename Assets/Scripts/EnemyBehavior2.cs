@@ -39,7 +39,6 @@ public class EnemyBehavior2 : MonoBehaviour
     private Path path;
     private int currentWaypoint = 0;
     private float nextWaypointDistance = .25f;
-    private bool reachedEndOfPath = false;
 
     [Header("References")]
     public PolygonCollider2D coneOfView;
@@ -69,6 +68,7 @@ public class EnemyBehavior2 : MonoBehaviour
     public float patrolling_WaitTime;
     private float patrolling_LookAroundTimeCounter = 0;
     private float patrolling_WaitTimeCounter = 0;
+    private Vector3 nextPOI;
 
 
 
@@ -94,8 +94,9 @@ public class EnemyBehavior2 : MonoBehaviour
         {
             pointsOfInterest.Add(POIobjects[i].GetComponent<Transform>());
         }
+
         //start up cycle to rescan the area around enemies, makes it so other enemies shouldn't path through one-another
-        StartCoroutine(RescanAreaAroundEnemyOnInterval(.3f));
+        //StartCoroutine(RescanAreaAroundEnemyOnInterval(.3f));
     }
 
     // Update is called once per frame
@@ -166,7 +167,8 @@ public class EnemyBehavior2 : MonoBehaviour
             {
                 case EnemyState.Patrolling:
                     maxSpeed = patrollingSpeed;
-                    UpdatePath(SelectPOI());
+                    SelectPOI();
+                    UpdatePath(nextPOI);
                     break;
                 case EnemyState.FarCombat:
                     maxSpeed = combatPositioningSpeed;
@@ -211,12 +213,14 @@ public class EnemyBehavior2 : MonoBehaviour
                     {
                         patrolling_LookAroundTimeCounter = 0;
                         patrolling_LookAroundTime = UnityEngine.Random.Range(4, 10);
-                        UpdatePath(SelectPOI());
+                        SelectPOI();
+                        UpdatePath(nextPOI);
                     }
                 }
                 else
                 {
                     desiredRotation = MoveAlongPath();
+                    UpdatePathOnInterval(nextPOI);
                 }
                 break;
             case EnemyState.FarCombat:
@@ -291,7 +295,7 @@ public class EnemyBehavior2 : MonoBehaviour
     }
 
     //Misc.
-    Vector3 SelectPOI() //out of the POE's, select one weighted by inverse of distance
+    void SelectPOI() //out of the POE's, select one weighted by inverse of distance
     {
         float totalDesireability = 0;
         List<float> desirabilityList = new List<float>();
@@ -312,10 +316,10 @@ public class EnemyBehavior2 : MonoBehaviour
             runningVal += desirabilityList[i];
             if (randomVal < runningVal)
             {
-                return pointsOfInterest[i].position;
+                nextPOI = pointsOfInterest[i].position;
+                break;
             }
         }
-        return Vector3.zero;
     }
     void TurnTowardsDesiredRotation()
     {
@@ -336,6 +340,15 @@ public class EnemyBehavior2 : MonoBehaviour
             path = p;
             currentWaypoint = 0;
             pathDestination = path.vectorPath[path.vectorPath.Count - 1];
+            
+            //reject paths that can't actually be navigated to. Regenerates path
+            float distFromDesiredDestinationToWherePathActuallyTermniates = Vector3.Distance(pathDestination, nextPOI);
+            if(distFromDesiredDestinationToWherePathActuallyTermniates > .4)
+            {
+                Debug.Log(this.gameObject.name + "Rejected path to" + nextPOI);
+                SelectPOI();
+                UpdatePath(nextPOI);
+            }
         }
     }
     void UpdatePathOnInterval(Vector3 destination)
@@ -360,12 +373,7 @@ public class EnemyBehavior2 : MonoBehaviour
             return 0;
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath = true;
             return 0;
-        }
-        else
-        {
-            reachedEndOfPath = false;
         }
 
         //calculate direction and apply velocity
@@ -393,18 +401,18 @@ public class EnemyBehavior2 : MonoBehaviour
             currentWaypoint++;
         }
 
-        //return direction angle for use of setting desired angle
+        //return angle of movement. Can be used for setting desiredAngle;
         return angleOfMovement;
     }
     IEnumerator RescanAreaAroundEnemyOnInterval(float interval)
     {
         while (true)
         {
-            RescanArea(transform.position, new Vector3(1.5f,1.5f,1));
+            RescanArea(transform.position - transform.up*1.5f, new Vector3(1.5f,1.5f,1));
             yield return new WaitForSeconds(interval);
         }
     }
-    public void RescanArea(Vector3 center, Vector3 dimensions)
+    private void RescanArea(Vector3 center, Vector3 dimensions)
     {
         Bounds rescanBounds = new Bounds(center, dimensions);
         var guo = new GraphUpdateObject(rescanBounds);
