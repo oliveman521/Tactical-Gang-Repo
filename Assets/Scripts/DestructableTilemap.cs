@@ -17,8 +17,8 @@ public class DestructableTilemap : MonoBehaviour
 
     public void BreakBlock(Vector3 hitPosition)
     {
-        //Debug.Log("Break at point" + hitPosition);
         Vector3Int hitCell = tilemap.WorldToCell(hitPosition);
+        tilemap.GetTile(hitCell);
         if (tilemap.GetTile(hitCell) != null)
         {
             tilemap.SetTile(hitCell, null);

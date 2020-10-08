@@ -20,13 +20,13 @@ public class PlayerInitializer : MonoBehaviour
 
 
         //spawn all players
-        if (PlayerConfigurationManager.Instance)
+        if (GameManager.Instance)
         {
-            PlayerConfiguration[] playerConfigs = PlayerConfigurationManager.Instance.playerConfigs.ToArray();
+            PlayerConfiguration[] playerConfigs = GameManager.Instance.playerConfigs.ToArray();
             foreach (PlayerConfiguration pc in playerConfigs)
             {
                 Transform spawnPoint = PickSpawnPoint();
-                PlayerConfigurationManager.Instance.mercDictionary.TryGetValue(pc.merc, out MercData mercData);
+                GameManager.Instance.mercDictionary.TryGetValue(pc.merc, out MercData mercData);
                 if (mercData == null)
                 {
                     Debug.Log("Merc not in dictionary");

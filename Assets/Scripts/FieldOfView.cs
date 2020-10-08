@@ -6,7 +6,7 @@ using UnityEngine.Diagnostics;
 
 public class FieldOfView : MonoBehaviour
 {
-    [SerializeField] private LayerMask solidsMask;
+    [SerializeField] private LayerMask solidsMask = ~0;
     private Mesh mesh;
     public float fov = 90f;
     public float viewDistance = 20f;
