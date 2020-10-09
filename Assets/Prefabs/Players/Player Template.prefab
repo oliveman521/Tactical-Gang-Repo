@@ -5166,8 +5166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56298480e90545143b320d31b0b44a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMoveSpeed: 15
-  moveSpeed: 15
+  startMoveSpeed: 3
+  moveSpeed: 3
   playerColorOverlay: {fileID: 6346716322256777833}
   maxHealth: 10
   health: 10
@@ -5243,10 +5243,6 @@ PrefabInstance:
     - target: {fileID: 6186623849011792580, guid: c3a8d0d510cc0fc4e9c3cefd51cc9b93, type: 3}
       propertyPath: m_Name
       value: FOV
-      objectReference: {fileID: 0}
-    - target: {fileID: 6186623849011792581, guid: c3a8d0d510cc0fc4e9c3cefd51cc9b93, type: 3}
-      propertyPath: fov
-      value: 121
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3a8d0d510cc0fc4e9c3cefd51cc9b93, type: 3}

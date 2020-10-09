@@ -49,7 +49,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   fov: 120
-  viewDistance: 20
+  rayCount: 60
+  viewDistance: 10
+  edgeResolveIterations: 6
+  edgeDistThreshold: 0.5
 --- !u!33 &6186623849011792576
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class PlayerBase : MonoBehaviour
     void Update()
     {
         //Move
-        rb.MovePosition(rb.position + (movement * moveSpeed * Time.deltaTime));
+        rb.velocity = (movement * moveSpeed);
         //Rotate
         ChoseDesiredrotation();
         rb.rotation = desiredRotation;

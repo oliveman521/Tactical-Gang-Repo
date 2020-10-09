@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 using UnityEngine.Diagnostics;
+using Unity.Mathematics;
 
 public class FieldOfView : MonoBehaviour
 {
     [SerializeField] private LayerMask solidsMask = ~0;
     private Mesh mesh;
+    [Range(0,360)]
     public float fov = 90f;
+    public float rayCount = 90;
     public float viewDistance = 20f;
+    public int edgeResolveIterations = 4;
+    public float edgeDistThreshold = 1;
     // Start is called before the first frame update
     void Start()
     {
         mesh = new Mesh();
+        mesh.name = "FOV mesh";
         GetComponent<MeshFilter>().mesh = mesh;
     }
 
@@ -25,61 +31,138 @@ public class FieldOfView : MonoBehaviour
         //transform.rotation = Quaternion.identity;
 
         float wallViewDist = .25f;
-        int raycount = (int)fov;
-        float angle = UtilsClass.GetAngleFromVector(transform.up) + fov / 2;
-        float angleIncrease = fov / raycount;
+        float angle = fov / 2 + 90;
+        float angleStepSize = fov / (rayCount - 1);
+        ViewCastInfo oldViewCast = new ViewCastInfo();
+        List<Vector3> fovPoints = new List<Vector3>();
 
-        Vector3[] verticies = new Vector3[raycount + 1 + 1];
-        Vector2[] uv = new Vector2[verticies.Length];
-        int[] triangles = new int[raycount * 3];
-
-        verticies[0] = Vector3.zero;
-
-        int vertexIndex = 1;
-        int triangleIndex = 0;
-        for (int i = 0; i <= raycount; i++)
+        for (int i = 0; i < rayCount; i++)
         {
-            Vector3 vertex;
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, UtilsClass.GetVectorFromAngle(angle), viewDistance, solidsMask);
-            if (raycastHit2D.collider == null)
-            {
-                //no hit
-                float trueMissPointAngle = angle;
-                float trueFacingAngle = transform.rotation.eulerAngles.z;
-                Vector2 angleOfDrawnArea = UtilsClass.GetVectorFromAngle(trueMissPointAngle - trueFacingAngle);
-
-                vertex = angleOfDrawnArea * viewDistance;
-            }
-            else
-            {
-
-                float lengthOfDrawnArea = (raycastHit2D.point + (Vector2)(UtilsClass.GetVectorFromAngle(angle).normalized * wallViewDist) - (Vector2)transform.position).magnitude;
-
-                float trueAngleToPoint = UtilsClass.GetAngleFromVector(raycastHit2D.point - (Vector2)transform.position);
-                float trueFacingAngle = transform.rotation.eulerAngles.z;
-                Vector2 angleOfDrawnArea = UtilsClass.GetVectorFromAngle(trueAngleToPoint - trueFacingAngle);// RelativeToPlayerFacing
-
-                //hit something
-                vertex = angleOfDrawnArea * lengthOfDrawnArea;
-
-            }
-            verticies[vertexIndex] = vertex;
+            ViewCastInfo newViewCast = ViewCast(angle);
 
             if (i > 0)
             {
-                triangles[triangleIndex + 0] = 0;
-                triangles[triangleIndex + 1] = vertexIndex - 1;
-                triangles[triangleIndex + 2] = vertexIndex;
-                triangleIndex += 3;
+                bool edgeDistThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDistThreshold;
+                if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDistThresholdExceeded))
+                {
+                    Debug.Log("edge defining triggered");
+                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast);
+                    if (edge.pointA != Vector3.zero)
+                    {
+                        fovPoints.Add(edge.pointA);
+                        Debug.Log("Point a chosem");
+                    }
+                    if (edge.pointB != Vector3.zero)
+                    {
+                        fovPoints.Add(edge.pointB);
+                        Debug.Log("Point b chosem");
+                    }
+                }
             }
-
-            vertexIndex++;
-            angle -= angleIncrease;
+            fovPoints.Add(newViewCast.point);
+            angle -= angleStepSize;
+            oldViewCast = newViewCast;
         }
 
-        mesh.vertices = verticies;
-        mesh.uv = uv;
+        int vertexCount = fovPoints.Count + 1;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(vertexCount - 2) * 3];
+
+        vertices[0] = Vector3.zero;
+
+
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            vertices[i + 1] = transform.InverseTransformPoint(fovPoints[i]);
+
+            if (i < vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+
+        mesh.Clear();
+        mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.RecalculateNormals();
     }
 
+    EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast)
+    {
+        float minAngle = minViewCast.angle;
+        float maxAngle = maxViewCast.angle;
+        Vector3 minPoint = Vector3.zero;
+        Vector3 maxPoint = Vector3.zero;
+
+        for (int i = 0; i < edgeResolveIterations; i++)
+        {
+            float angle = (minAngle + maxAngle) / 2;
+            ViewCastInfo newViewCast = ViewCast(angle);
+
+            bool edgeDistThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > edgeDistThreshold;
+            if (newViewCast.hit == minViewCast.hit && !edgeDistThresholdExceeded)
+            {
+                minAngle = angle;
+                minPoint = newViewCast.point;
+            }
+            else 
+            {
+                maxAngle = angle;
+                maxPoint = newViewCast.point;
+            }
+        }
+        return new EdgeInfo(minPoint, maxPoint);
+    }
+    public struct EdgeInfo
+    {
+        public Vector3 pointA;
+        public Vector3 pointB;
+
+        public EdgeInfo(Vector3 _pointA, Vector3 _pointB)
+        {
+            pointA = _pointA;
+            pointB = _pointB;
+        }
+    }
+        
+    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+    {
+        if(angleIsGlobal != false)
+        {
+            angleInDegrees += transform.eulerAngles.z;  //if angle isnt in global space, convert it to be in global space.
+        }
+        return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
+    }
+
+    public struct ViewCastInfo
+    {
+        public bool hit;
+        public Vector3 point;
+        public float dst;
+        public float angle;
+
+        public ViewCastInfo(bool _hit, Vector3 _point, float _dst, float _angle)
+        {
+            hit = _hit;
+            point = _point;
+            dst = _dst;
+            angle = _angle;
+        }
+    }
+    ViewCastInfo ViewCast(float globalAngle)
+    {
+        Vector3 dir = DirFromAngle(globalAngle, true);
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, dir, viewDistance, solidsMask);
+
+        if (hitInfo)
+        {
+            return new ViewCastInfo(true, hitInfo.point, hitInfo.distance, globalAngle);
+        }
+        else
+        {
+            return new ViewCastInfo(false, transform.position + dir * viewDistance, solidsMask, globalAngle);
+        }
+    }
 }
