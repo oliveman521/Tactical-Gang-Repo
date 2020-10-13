@@ -15,8 +15,12 @@ MonoBehaviour:
   detPackPrefab: {fileID: 3029568032520618486, guid: 095165be8ba85eb4ebcffbf7fcb3ddb4, type: 3}
   packSpawnPoint: {fileID: 88537370979919588}
   detPacks: []
-  explosionRadius: 1
-  explosionDamage: 2
+  placingRange: 2
+  explosionRadius: 1.5
+  explosionDamage: 4
+  wallLayers:
+    serializedVersion: 2
+    m_Bits: 768
 --- !u!1 &6910035219643315199
 GameObject:
   m_ObjectHideFlags: 0

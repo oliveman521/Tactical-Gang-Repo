@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
-using UnityEngine.Diagnostics;
-using Unity.Mathematics;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -40,27 +37,24 @@ public class FieldOfView : MonoBehaviour
         {
             ViewCastInfo newViewCast = ViewCast(angle);
 
-            if (i > 0)
+            if (i > 0) //advanced edge detection
             {
                 bool edgeDistThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDistThreshold;
                 if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDistThresholdExceeded))
                 {
-                    Debug.Log("edge defining triggered");
                     EdgeInfo edge = FindEdge(oldViewCast, newViewCast);
                     if (edge.pointA != Vector3.zero)
                     {
                         fovPoints.Add(edge.pointA);
-                        Debug.Log("Point a chosem");
                     }
                     if (edge.pointB != Vector3.zero)
                     {
                         fovPoints.Add(edge.pointB);
-                        Debug.Log("Point b chosem");
                     }
                 }
             }
-            fovPoints.Add(newViewCast.point);
-            angle -= angleStepSize;
+            fovPoints.Add(newViewCast.point); //add a new point to our list for the new raycast
+            angle -= angleStepSize; //progress the angle
             oldViewCast = newViewCast;
         }
 

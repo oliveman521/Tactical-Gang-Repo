@@ -79,7 +79,7 @@ public class GunBehavior : MonoBehaviour
                         Vector3 hitPosition = Vector3.zero;
                         hitPosition.x = hitInfo.point.x + noisyAngle.normalized.x * .01f;
                         hitPosition.y = hitInfo.point.y + noisyAngle.normalized.y * .01f; ;
-                        hitInfo.collider.gameObject.GetComponent<DestructableTilemap>().BreakBlock(hitPosition);
+                        hitInfo.collider.gameObject.GetComponent<DestructableTilemap>().ShootBlock(hitPosition, bulletDamage);
                     }
                     catch { }
                 }

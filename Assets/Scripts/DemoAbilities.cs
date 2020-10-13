@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
+using CodeMonkey.Utils;
 
 public class DemoAbilities : MonoBehaviour
 {
     public GameObject detPackPrefab;
     public Transform packSpawnPoint;
     public List<GameObject> detPacks = new List<GameObject>();
+    public float placingRange = 2;
     public float explosionRadius;
     public float explosionDamage;
-    public LayerMask explosionHitableLayers;
-    private ContactFilter2D hitableLayersFilter;
+    public LayerMask wallLayers;
+    private ContactFilter2D wallFilter;
     // Start is called before the first frame update
     void Start()
     {
-        hitableLayersFilter.layerMask = explosionHitableLayers;
+        wallFilter.layerMask = wallLayers;
     }
 
     // Update is called once per frame
@@ -28,7 +30,17 @@ public class DemoAbilities : MonoBehaviour
     { 
         if(ctx.started)
         {
-            GameObject newDetPack = Instantiate(detPackPrefab,packSpawnPoint.position,packSpawnPoint.rotation);
+            GameObject newDetPack;
+            RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, placingRange, wallLayers);
+            if(hitInfo)
+            {
+                float rotationToBeFlatToWall = UtilsClass.GetAngleFromVector(hitInfo.normal) + 90;
+                newDetPack = Instantiate(detPackPrefab, hitInfo.point, Quaternion.Euler(new Vector3(0, 0, rotationToBeFlatToWall)));
+            }
+            else
+            {
+                newDetPack = Instantiate(detPackPrefab, packSpawnPoint.position, packSpawnPoint.rotation);
+            }
             detPacks.Add(newDetPack);
         }
     }
@@ -41,12 +53,13 @@ public class DemoAbilities : MonoBehaviour
                 foreach (GameObject detPack in detPacks)
                 {
                     Collider2D[] results = new Collider2D[10];
-                    Physics2D.OverlapCircle(detPack.transform.position, explosionRadius, hitableLayersFilter, results);
+                    Vector3 explosionCenter = detPack.transform.position + transform.up * explosionRadius/3;
+                    Physics2D.OverlapCircle(explosionCenter, explosionRadius, wallFilter, results);
                     for (int i = 0; i < results.Length; i++)
                     {
                         try
                         {
-                            results[i].GetComponent<DestructableTilemap>().ExlosionBlockDamage(detPack.transform.position, explosionRadius);
+                            results[i].GetComponent<DestructableTilemap>().ExplosionDamage(explosionCenter, explosionRadius, explosionDamage);
                         }
                         catch { }
                         try
