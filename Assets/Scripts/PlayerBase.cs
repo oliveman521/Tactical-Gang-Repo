@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.SceneManagement;
 
 public class PlayerBase : MonoBehaviour
 {
-
+    
     [Header("Movement & Rotation")]
     public float startMoveSpeed = .1f;
     public float moveSpeed = .1f;
@@ -24,6 +25,7 @@ public class PlayerBase : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 10;
     public float health = 10;
+    public bool down = false;
 
     [Header("Scope Settings")]
     public float scopedRotationSensitivity = 3f;
@@ -79,6 +81,7 @@ public class PlayerBase : MonoBehaviour
     }
     private void RecalculateMoveSpeed()
     {
+        moveSpeedModifierFromDamage = health / maxHealth;
         moveSpeed = startMoveSpeed * moveSpeedModifierFromDamage;
         if (isScoped)
         {
@@ -96,10 +99,18 @@ public class PlayerBase : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            ///die
+            down = true;
+        }
+        else
+        {
+            down = false;
         }
 
-        moveSpeedModifierFromDamage = health / maxHealth;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
         RecalculateMoveSpeed();
         ParticleSystem.EmissionModule bloodTrailEmission = bloodTrail.emission;
         bloodTrailEmission.rateOverTime = (maxHealth - health) / maxHealth * 5;
@@ -124,4 +135,12 @@ public class PlayerBase : MonoBehaviour
             aim = aimVal;
         }
     }
+    public void Restart(CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
 }

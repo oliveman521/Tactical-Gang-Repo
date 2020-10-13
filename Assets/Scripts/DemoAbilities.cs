@@ -4,8 +4,10 @@ using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 using CodeMonkey.Utils;
 
+[RequireComponent(typeof(PlayerBase))]
 public class DemoAbilities : MonoBehaviour
 {
+    private PlayerBase playerBase;
     public GameObject detPackPrefab;
     public Transform packSpawnPoint;
     public List<GameObject> detPacks = new List<GameObject>();
@@ -17,6 +19,7 @@ public class DemoAbilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerBase = GetComponent<PlayerBase>();
         wallFilter.layerMask = wallLayers;
     }
 
@@ -28,7 +31,7 @@ public class DemoAbilities : MonoBehaviour
 
     public void LayDetPack(CallbackContext ctx)
     { 
-        if(ctx.started)
+        if(ctx.started && playerBase.down == false)
         {
             GameObject newDetPack;
             RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, placingRange, wallLayers);
@@ -36,11 +39,13 @@ public class DemoAbilities : MonoBehaviour
             {
                 float rotationToBeFlatToWall = UtilsClass.GetAngleFromVector(hitInfo.normal) + 90;
                 newDetPack = Instantiate(detPackPrefab, hitInfo.point, Quaternion.Euler(new Vector3(0, 0, rotationToBeFlatToWall)));
+                newDetPack.transform.parent = hitInfo.collider.gameObject.transform;
             }
             else
             {
-                newDetPack = Instantiate(detPackPrefab, packSpawnPoint.position, packSpawnPoint.rotation);
+                newDetPack = Instantiate(detPackPrefab, transform.position + transform.up*placingRange/2, transform.rotation);
             }
+
             detPacks.Add(newDetPack);
         }
     }
@@ -52,23 +57,26 @@ public class DemoAbilities : MonoBehaviour
             {
                 foreach (GameObject detPack in detPacks)
                 {
-                    Collider2D[] results = new Collider2D[10];
-                    Vector3 explosionCenter = detPack.transform.position + transform.up * explosionRadius/3;
-                    Physics2D.OverlapCircle(explosionCenter, explosionRadius, wallFilter, results);
-                    for (int i = 0; i < results.Length; i++)
+                    if(detPack != null) //Detpack might be null if it got destroyed early from say sticking it to an enemy, and that enemy getting killed
                     {
-                        try
+                        Collider2D[] results = new Collider2D[10];
+                        Vector3 explosionCenter = detPack.transform.position + transform.up * explosionRadius / 3;
+                        Physics2D.OverlapCircle(explosionCenter, explosionRadius, wallFilter, results);
+                        for (int i = 0; i < results.Length; i++)
                         {
-                            results[i].GetComponent<DestructableTilemap>().ExplosionDamage(explosionCenter, explosionRadius, explosionDamage);
+                            try
+                            {
+                                results[i].GetComponent<DestructableTilemap>().ExplosionDamage(explosionCenter, explosionRadius, explosionDamage);
+                            }
+                            catch { }
+                            try
+                            {
+                                results[i].GetComponent<EnemyBehavior2>().Damage(explosionDamage, null);
+                            }
+                            catch { }
                         }
-                        catch { }
-                        try
-                        {
-                            results[i].GetComponent<EnemyBehavior2>().Damage(explosionDamage, null);
-                        }
-                        catch { }
+                        Destroy(detPack);
                     }
-                    Destroy(detPack);
                 }
                 detPacks = new List<GameObject>();
             }

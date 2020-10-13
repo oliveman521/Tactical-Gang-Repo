@@ -20,7 +20,7 @@ MonoBehaviour:
   explosionDamage: 4
   wallLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 4864
 --- !u!1 &6910035219643315199
 GameObject:
   m_ObjectHideFlags: 0

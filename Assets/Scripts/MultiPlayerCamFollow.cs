@@ -40,7 +40,7 @@ public class MultiPlayerCamFollow : MonoBehaviour
     }
     void Zoom()
     {
-        float newZoom = Mathf.Clamp(GetGreatestDistance()/1.5f, minZoom, maxZoom);
+        float newZoom = Mathf.Clamp(GetGreatestDistance()/2f, minZoom, maxZoom);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
     }
     void Move()

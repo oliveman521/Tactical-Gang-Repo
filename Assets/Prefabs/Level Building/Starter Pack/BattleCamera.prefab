@@ -213,5 +213,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0, z: -10}
   smoothTime: 0.25
-  minZoom: 8
+  minZoom: 10
   maxZoom: 20

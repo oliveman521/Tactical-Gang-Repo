@@ -65,6 +65,14 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PlaytestBind"",
+                    ""type"": ""Button"",
+                    ""id"": ""bbc92a36-e7c7-486e-be22-eb47cf20fbd9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -133,6 +141,17 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80901988-c3d4-48c6-a5eb-5d9462a10685"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaytestBind"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +166,7 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
         m_GamePlay_SecondaryAction = m_GamePlay.FindAction("SecondaryAction", throwIfNotFound: true);
         m_GamePlay_TertiaryAction = m_GamePlay.FindAction("TertiaryAction", throwIfNotFound: true);
         m_GamePlay_Menu = m_GamePlay.FindAction("Menu", throwIfNotFound: true);
+        m_GamePlay_PlaytestBind = m_GamePlay.FindAction("PlaytestBind", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -202,6 +222,7 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_GamePlay_SecondaryAction;
     private readonly InputAction m_GamePlay_TertiaryAction;
     private readonly InputAction m_GamePlay_Menu;
+    private readonly InputAction m_GamePlay_PlaytestBind;
     public struct GamePlayActions
     {
         private @GameplayInputs m_Wrapper;
@@ -212,6 +233,7 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
         public InputAction @SecondaryAction => m_Wrapper.m_GamePlay_SecondaryAction;
         public InputAction @TertiaryAction => m_Wrapper.m_GamePlay_TertiaryAction;
         public InputAction @Menu => m_Wrapper.m_GamePlay_Menu;
+        public InputAction @PlaytestBind => m_Wrapper.m_GamePlay_PlaytestBind;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -239,6 +261,9 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
                 @Menu.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnMenu;
+                @PlaytestBind.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPlaytestBind;
+                @PlaytestBind.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPlaytestBind;
+                @PlaytestBind.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPlaytestBind;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -261,6 +286,9 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @PlaytestBind.started += instance.OnPlaytestBind;
+                @PlaytestBind.performed += instance.OnPlaytestBind;
+                @PlaytestBind.canceled += instance.OnPlaytestBind;
             }
         }
     }
@@ -273,5 +301,6 @@ public class @GameplayInputs : IInputActionCollection, IDisposable
         void OnSecondaryAction(InputAction.CallbackContext context);
         void OnTertiaryAction(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnPlaytestBind(InputAction.CallbackContext context);
     }
 }

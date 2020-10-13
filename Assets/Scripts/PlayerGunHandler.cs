@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.InputSystem.InputAction;
 
+[RequireComponent(typeof(PlayerBase))]
 public class PlayerGunHandler : MonoBehaviour
 {
+    private PlayerBase playerBase;
     private GunBehavior equippedGun;
     private bool isShooting = false;
 
@@ -22,7 +24,6 @@ public class PlayerGunHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ammo = startAmmo;
         try
         {
@@ -34,7 +35,7 @@ public class PlayerGunHandler : MonoBehaviour
             Debug.Log("No gun found");
             Destroy(this);
         }
-
+        playerBase = GetComponent<PlayerBase>();
 
     }
 
@@ -43,7 +44,7 @@ public class PlayerGunHandler : MonoBehaviour
     {
         rateOfFireCoutner += Time.deltaTime;
 
-        if (hasShot == false || fullAuto == true) //check for full/semi auto settings
+        if (hasShot == false || fullAuto == true) //check for full/semi auto settings,
         {
             
             if (isShooting && ammo >= 1 && rateOfFireCoutner > 1 / equippedGun.fireRate) //shoot if   1. player is pulling trigger   2. PLayer has ammo    3. Enough time has passed since the last shot
@@ -60,7 +61,6 @@ public class PlayerGunHandler : MonoBehaviour
                 rateOfFireCoutner = 0;
                 hasShot = true;
             }
-            
         }
     }
     public void OnCollisionEnter2D(Collision2D collision)
@@ -91,7 +91,7 @@ public class PlayerGunHandler : MonoBehaviour
     }
     public void OnShoot(CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && playerBase.down == false)
         {
             isShooting = true;
         }

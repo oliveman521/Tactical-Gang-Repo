@@ -56,6 +56,7 @@ public class FieldOfView : MonoBehaviour
             fovPoints.Add(newViewCast.point); //add a new point to our list for the new raycast
             angle -= angleStepSize; //progress the angle
             oldViewCast = newViewCast;
+            
         }
 
         int vertexCount = fovPoints.Count + 1;
@@ -149,14 +150,23 @@ public class FieldOfView : MonoBehaviour
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, dir, viewDistance, solidsMask);
+        
+        
 
         if (hitInfo)
         {
+            //change layer of crate so that it was totally visable
+            if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Obsticles"))
+            {
+                hitInfo.collider.gameObject.layer = LayerMask.NameToLayer("Walls");
+            }
+
             return new ViewCastInfo(true, hitInfo.point, hitInfo.distance, globalAngle);
         }
         else
         {
             return new ViewCastInfo(false, transform.position + dir * viewDistance, solidsMask, globalAngle);
         }
+        
     }
 }
