@@ -44,7 +44,7 @@ public class MedicAbilities : MonoBehaviour
                 chargeAmount = 1;
             float healAmount = chargeAmount * maxHealAmount;
 
-            Physics2D.OverlapCircle(transform.position, healRadius, );
+            //Physics2D.OverlapCircle(transform.position, healRadius, );
         }
     }
 }

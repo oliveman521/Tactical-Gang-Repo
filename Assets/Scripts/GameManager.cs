@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
             var menu = Instantiate(playerSetupMenuPrefab, rootMenu.transform);
             pi.uiInputModule = menu.GetComponentInChildren<InputSystemUIInputModule>();
             menu.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(pi.playerIndex);
+            menu.transform.SetSiblingIndex(menu.transform.parent.childCount - 2);
         }
     }
 }
