@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8728658506727957589, guid: e7ddb86e4b4e4a9488cf9e6ad78e13d9, type: 3}
       propertyPath: bulletHitMask.m_Bits
-      value: 4864
+      value: 70400
       objectReference: {fileID: 0}
     - target: {fileID: 8728658506727957591, guid: e7ddb86e4b4e4a9488cf9e6ad78e13d9, type: 3}
       propertyPath: m_Name

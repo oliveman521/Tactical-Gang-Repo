@@ -179,6 +179,8 @@ GameObject:
   - component: {fileID: 6345009132644676102}
   - component: {fileID: 7115434011747484008}
   - component: {fileID: 2056648293834129781}
+  - component: {fileID: -8431540581397023472}
+  - component: {fileID: 5751108505645364088}
   m_Layer: 10
   m_Name: Player Template
   m_TagString: Player
@@ -240,8 +242,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2051196917
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -5080229030423682255, guid: 684579c60ad2a36449ebc75ae71ecbe4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -283,7 +285,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7115434011747484008}
         m_TargetAssemblyTypeName: PlayerBase, Assembly-CSharp
-        m_MethodName: Move
+        m_MethodName: Movement
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -385,7 +387,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -5199,6 +5201,8 @@ MonoBehaviour:
   playerColorOverlay: {fileID: 6346716322256777833}
   maxHealth: 10
   health: 10
+  down: 0
+  damageNumberPrefab: {fileID: 8581149369718964991, guid: 370a7a770a396b64094f5cd4084903c9, type: 3}
   scopedRotationSensitivity: 0.5
   scopedMoveSpeedModifier: 0.5
 --- !u!58 &2056648293834129781
@@ -5217,6 +5221,38 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.31925875
+--- !u!114 &-8431540581397023472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345009132644676103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220001f0cf9010b43a3d545b052b48de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  supplies: 10
+  maxSupplies: 15
+--- !u!114 &5751108505645364088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345009132644676103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4da9130b97d1924aab643aaec614d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carriedObject: {fileID: 0}
+  solidLayers:
+    serializedVersion: 2
+    m_Bits: 70400
+  moveSpeed: 2
+  minY: 0.1
 --- !u!1001 &249200899597235254
 PrefabInstance:
   m_ObjectHideFlags: 0

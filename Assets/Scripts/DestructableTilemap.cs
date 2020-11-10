@@ -27,7 +27,6 @@ public class DestructableTilemap : MonoBehaviour
     }
     public void ExplosionDamage(Vector3 center, float radius, float centerDamage)
     {
-        Debug.Log("Explosion at" + center);
         Vector3Int centerCell = tilemap.WorldToCell(center);
         int cellRadius = (int)(radius * 4);
         int minX = (int)centerCell.x - cellRadius;
@@ -40,6 +39,7 @@ public class DestructableTilemap : MonoBehaviour
             {
                 Vector3Int currentCell = new Vector3Int(x, y, 0);
                 float newDamage = centerDamage * (1 - (Vector3.Distance(tilemap.CellToWorld(currentCell), center) / radius));
+                Mathf.Clamp(newDamage, 0, centerDamage);
                 DamageTile(currentCell, newDamage);
             }
         }

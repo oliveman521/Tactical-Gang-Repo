@@ -86,14 +86,13 @@ public class GunBehavior : MonoBehaviour
                 if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     hitInfo.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(noisyAngle.normalized * bulletKnockBack);
-                    hitInfo.collider.gameObject.GetComponent<PlayerBase>().Damage(bulletDamage);
+                    hitInfo.collider.gameObject.GetComponent<PlayerBase>().ChangeHealth(-bulletDamage);
                 }
-                if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+                if (hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Hostile"))
                 {
                     hitInfo.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(noisyAngle.normalized * bulletKnockBack);
                     hitInfo.collider.gameObject.GetComponent<EnemyBehavior2>().Damage(bulletDamage, this.transform.parent.gameObject);
                 }
-
             }
             else //draw bullet trail for missed bullet
             {

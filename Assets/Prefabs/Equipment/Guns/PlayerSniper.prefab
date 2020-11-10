@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6124237602765183595, guid: 47832b5bef4f8f74eafdc7ec3dd8e201, type: 3}
       propertyPath: bulletHitMask.m_Bits
-      value: 4864
+      value: 70400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47832b5bef4f8f74eafdc7ec3dd8e201, type: 3}

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -9,30 +9,30 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float FPS;
+
     public List<PlayerConfiguration> playerConfigs;
-    public static GameManager Instance { get; private set; }
+
+    [HideInInspector] public GameObject selectOnJoin;
+    [HideInInspector] public static GameManager Instance { get; private set; }
+    [HideInInspector] public PlayerInputManager inputManager;
+
+
+    [Header("Data")]
     public Color[] mercColorDictionary;
     public MercData[] mercData;
     public Dictionary<MercTag, MercData> mercDictionary = new Dictionary<MercTag, MercData>();
     public LevelData[] levelData;
 
-    public string nextLevel;
-
-    [SerializeField]
-    private GameObject playerSetupMenuPrefab;
+    [HideInInspector] public bool gameIsPaused = false;
+    [HideInInspector]public string nextLevel;
 
     private void Awake()
     {
-        //setup the merc data dictionary
-        foreach(MercData mercDataPoint in mercData)
-        {
-            mercDictionary.Add(mercDataPoint.mercTag, mercDataPoint);
-        }
-
-        //Creating the singleton of this script (with basic check)
+        //Creating the singleton of this script (with basic check to make sure it doesn't already exist)
         if(Instance != null)
         {
             Debug.Log("SINGLETON - Trying to create another instance - error");
+            Destroy(this.gameObject);
         }
         else
         {   //creating a singleton
@@ -41,8 +41,16 @@ public class GameManager : MonoBehaviour
             playerConfigs = new List<PlayerConfiguration>();
         }
 
+        //setup the merc data dictionary
+        foreach (MercData mercDataPoint in mercData)
+        {
+            mercDictionary.Add(mercDataPoint.mercTag, mercDataPoint);
+        }
+        inputManager = GetComponent<PlayerInputManager>();
         //subscribe to find out when new scenes are loaded
         SceneManager.sceneLoaded += OnSceneLoaded;
+        inputManager.onPlayerJoined += OnPlayerJoined;
+        inputManager.onPlayerLeft += OnPlayerLeft;
     }
 
     void Update()
@@ -78,64 +86,74 @@ public class GameManager : MonoBehaviour
     }
     public void OnPlayerJoined(PlayerInput pi)
     {
-        Debug.Log("Player Joined!!" + pi.playerIndex);
-        pi.transform.SetParent(transform);
+        pi.transform.SetParent(transform); //Todo: rework player joining so that there isn't an extra player configuration added when player spawns in
 
-        //check if the player is new. MAke sure their index isnt already saved in playerConfigs
-        bool isNewPlayer = true;
+        //check if the player is new. Make sure their index isnt already saved in playerConfigs
+        PlayerConfiguration existingConfig = null;
         if (playerConfigs.Count > 0)
         {
             foreach (PlayerConfiguration playerConfig in playerConfigs)
             {
                 if (playerConfig.index == pi.playerIndex)
                 {
-                    isNewPlayer = false;
+                    existingConfig = playerConfig;
                 }
             }
         }
-        if (isNewPlayer)
+        if (existingConfig == null) //the config in question is new, not in the list yet. Spawn in some shit
         {
-            playerConfigs.Add(new PlayerConfiguration(pi));
-            
-            //set up a player setup menu for new player if necessary
-            if (SceneManager.GetActiveScene().name == "PlayerSelect")
+            PlayerConfiguration newPlayerConfig = new PlayerConfiguration(pi);
+            playerConfigs.Add(newPlayerConfig);
+            if(selectOnJoin)
+                newPlayerConfig.mpEventSystem.SetSelectedGameObject(selectOnJoin);
+            Debug.Log("Player " + pi.playerIndex + " Joined!!");
+                 
+        }
+        else //the config in question exists already, just set it back to connected status
+        {
+            Debug.Log("New player was already in the game at some point, but still had a config sitting around? Error!");
+        }
+    }
+    public void OnPlayerLeft(PlayerInput pi)
+    {
+        PlayerConfiguration disconnectedConfig = null;
+        foreach (PlayerConfiguration playerConfig in playerConfigs)
+        {
+            if(playerConfig.index == pi.playerIndex)
             {
-                  SpawnPlayerSelectMenu(pi);
+                disconnectedConfig = playerConfig;
             }
         }
-        
+        if(disconnectedConfig != null)
+        {
+            playerConfigs.Remove(disconnectedConfig);
+            Debug.Log("player suggessfully removed");
+        }
+        else
+        {
+            Debug.Log("Error - Player who disconnected could not be found");
+        }
+
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "PlayerSelect")
-        {
-            foreach (PlayerConfiguration playerConfig in GameManager.Instance.playerConfigs)
-            {
-                SpawnPlayerSelectMenu(playerConfig.playerInput);
-            }
-        }
+        
     }
-    public void SpawnPlayerSelectMenu(PlayerInput pi)
-    {
-        var rootMenu = GameObject.Find("Player Select UI Layout");
-        if (rootMenu != null)
-        {
-            var menu = Instantiate(playerSetupMenuPrefab, rootMenu.transform);
-            pi.uiInputModule = menu.GetComponentInChildren<InputSystemUIInputModule>();
-            menu.GetComponent<PlayerSetupMenuController>().SetPlayerIndex(pi.playerIndex);
-            menu.transform.SetSiblingIndex(menu.transform.parent.childCount - 2);
-        }
-    }
+
+
 }
 
+[Serializable]
 public class PlayerConfiguration
 {
     public PlayerConfiguration(PlayerInput pi)
     {
         index = pi.playerIndex;
         playerInput = pi;
+        mpEventSystem = pi.gameObject.GetComponentInChildren<MultiplayerEventSystem>();
     }
     public PlayerInput playerInput { get; set; }
+    public MultiplayerEventSystem mpEventSystem;
     public int index { get; set; }
     public bool isReady { get; set; }
     public Color color { get; set; }

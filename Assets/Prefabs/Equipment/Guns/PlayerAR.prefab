@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2690452939913990345, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4225082800667632049, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5180222169616134149, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_Name
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180222169616134151, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: bulletHitMask.m_Bits
-      value: 4864
+      value: 70400
       objectReference: {fileID: 0}
     - target: {fileID: 8253650202417577194, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_Enabled
@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8828085655261730990, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9028ce58746f6ef41aa5c81d6326581b, type: 3}

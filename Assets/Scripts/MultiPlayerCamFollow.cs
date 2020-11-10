@@ -23,7 +23,8 @@ public class MultiPlayerCamFollow : MonoBehaviour
         {
             targets.Add(targetObject.transform);
         }
-        
+        transform.position = GetCenterPoint();
+        cam.orthographicSize = Mathf.Clamp(GetGreatestDistance() / 2f, minZoom, maxZoom);
     }
 
     // Update is called once per frame

@@ -12,10 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d690dceff334db54b9849f0cb21ca6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 35
-  startAmmo: 30
-  ammo: 0
-  ammoPerSupply: 2
+  suppliesPerShot: 0.5
+--- !u!114 &8831056136144957752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042718314747823153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a10691487f53344aae9deba5b923eb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  inputEvents: []
 --- !u!1001 &851757001740367414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25,8 +36,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5070278481749972130, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5751108505645364088, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: carriedObject
+      value: 
+      objectReference: {fileID: 7418326086704597203}
     - target: {fileID: 6245959940075011828, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -38,6 +53,10 @@ PrefabInstance:
     - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -63,6 +82,30 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionId
+      value: 88a7dd8b-e8b1-4806-a5b4-c534ec4644e0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionName
+      value: UI/Navigate[/XInputControllerWindows/leftStick,/XInputControllerWindows/rightStick]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionId
+      value: fcdad2b6-947b-49a7-9119-ae0d1c8a8ff4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionName
+      value: UI/Confirm[/XInputControllerWindows/buttonSouth]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: 918e955c-aaa3-4fdd-b1da-5c3d3a1760d5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345009132644676098, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
+      value: UI/Back[/XInputControllerWindows/buttonEast]
+      objectReference: {fileID: 0}
     - target: {fileID: 6345009132644676103, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_Name
       value: Gunner
@@ -85,7 +128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7074725705608702070, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b5e72e7475050844b2cd753256cff12, type: 3}
@@ -156,3 +199,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8deb293efc7f5f14b9969c112f809715, type: 3}
+--- !u!1 &7418326086704597203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 803104031018247081, guid: 8deb293efc7f5f14b9969c112f809715, type: 3}
+  m_PrefabInstance: {fileID: 7914516255272102778}
+  m_PrefabAsset: {fileID: 0}

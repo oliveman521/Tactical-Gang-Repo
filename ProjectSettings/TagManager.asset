@@ -22,11 +22,11 @@ TagManager:
   - Obsticles
   - Player
   - Mask
-  - Enemies
+  - Hostile
   - FogOfWar
   - HeldObject
-  - 
-  - 
+  - PlayerShield
+  - HostileShield
   - 
   - 
   - 

@@ -27,7 +27,6 @@ public class PlayerSetupMenuController : MonoBehaviour
     private GameObject mercButtonLayoutGroup = null;
 
     private MultiplayerEventSystem mpEventSystem;
-    private InputSystemUIInputModule uiInputModule;
 
     private float ignoreInputTime = .5f;
     private bool inputEnabled;
@@ -47,8 +46,7 @@ public class PlayerSetupMenuController : MonoBehaviour
 
     private void Start()
     {
-        mpEventSystem = GetComponentInChildren<MultiplayerEventSystem>();
-        uiInputModule = GetComponentInChildren<InputSystemUIInputModule>();
+        mpEventSystem = GameManager.Instance.playerConfigs[playerIndex].mpEventSystem;
 
         //uiInputModule.cancel.action.actionMap.AddAction(() => PastMenu())
         GenerateColorSelectField();
@@ -82,10 +80,12 @@ public class PlayerSetupMenuController : MonoBehaviour
         currentMenu+=1;
         playerSetupMenus[currentMenu].SetActive(true);
         Button[] buttonsInNextMenu = playerSetupMenus[currentMenu].GetComponentsInChildren<Button>();
-        buttonsInNextMenu[0].Select();
+        mpEventSystem.SetSelectedGameObject(null);
+        mpEventSystem.SetSelectedGameObject(buttonsInNextMenu[0].gameObject);
     }
     public void PastMenu()
     {
+        Debug.Log("Past Menu triggered");
         try
         {
             GameObject upcomingMenu = playerSetupMenus[currentMenu - 1];
@@ -95,7 +95,6 @@ public class PlayerSetupMenuController : MonoBehaviour
             Debug.Log("The Menu you are trying to reach doesnt exist");
             return;
         }
-        Debug.Log("Past Menu triggered");
         playerSetupMenus[currentMenu].SetActive(false);
         currentMenu -= 1;
         playerSetupMenus[currentMenu].SetActive(true);
@@ -120,9 +119,16 @@ public class PlayerSetupMenuController : MonoBehaviour
     {
         if (mpEventSystem.currentSelectedGameObject != lastSelectedObject)
         {
-            mpEventSystem.currentSelectedGameObject.GetComponent<Outline>().enabled = true;
+            Outline outline = mpEventSystem.currentSelectedGameObject.GetComponent<Outline>();
+            if(outline)
+                 outline.enabled = true;
             if (lastSelectedObject != null)
-                lastSelectedObject.GetComponent<Outline>().enabled = false;
+            {
+                Outline lastOutline = lastSelectedObject.GetComponent<Outline>();
+                if(lastOutline)
+                    lastOutline.enabled = false;
+            }
+
         }
         lastSelectedObject = mpEventSystem.currentSelectedGameObject;
     }

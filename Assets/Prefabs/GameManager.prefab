@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FPS: 0
+  playerConfigs: []
+  selectOnJoin: {fileID: 0}
   mercColorDictionary:
   - {r: 1, g: 0.48424345, b: 0, a: 1}
   - {r: 1, g: 0, b: 0.8241086, a: 1}
@@ -67,6 +69,9 @@ MonoBehaviour:
   - mercTag: 3
     mercPrefab: {fileID: 1508997053659096417, guid: 9fce6993306eab5418795976b30ea1dd, type: 3}
     mercIcon: {fileID: 0}
+  - mercTag: 7
+    mercPrefab: {fileID: 7159464878161628635, guid: a2b7c034f8dca8248a220019d3265c7a, type: 3}
+    mercIcon: {fileID: 0}
   levelData:
   - levelName: Warehouse 1
     displayName: Warehouse 1
@@ -74,6 +79,7 @@ MonoBehaviour:
   - levelName: Warehouse 2
     displayName: Warehouse 2
     icon: {fileID: 0}
+  gameIsPaused: 0
   nextLevel: 
   playerSetupMenuPrefab: {fileID: 6808900531421500375, guid: e9f696265a8ba214cab80bff02b8bd42, type: 3}
 --- !u!114 &2086314134516054521
@@ -88,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 3
   m_MaxPlayerCount: -1
   m_AllowJoining: 1
   m_JoinBehavior: 0
